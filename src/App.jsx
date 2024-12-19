@@ -22,9 +22,11 @@ function App() {
     <>
       {/* <Database /> */}
       {/* <Check/> */}
-      {/* <Interface/>   */}
+      <Interface/>  
+      
+      
       {/* <Form1 /> */}
-      <Form2/>
+      {/* <Form2/> */}
       {/*    {data.map((item, index) => (
         <>
           <p key={index}>{item.id}</p>
