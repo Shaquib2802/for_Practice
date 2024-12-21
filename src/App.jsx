@@ -5,6 +5,7 @@ import Check from "./Check";
 import Interface from "./Component/Todo/Interface";
 import Form1 from "./Component/Todo/Form1";
 import Form2 from "./Component/Todo/Form2";
+import Add_Task from "./Component/Add_Task/Add_Task";
 
 function App() {
   /*  const [data, setData] = useState([]);
@@ -24,7 +25,7 @@ function App() {
       {/* <Check/> */}
       <Interface/>  
       
-      
+      {/* <Add_Task/> */}
       {/* <Form1 /> */}
       {/* <Form2/> */}
       {/*    {data.map((item, index) => (

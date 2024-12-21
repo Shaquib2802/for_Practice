@@ -1,18 +1,18 @@
-import axios from "axios"
-import { BaseUrl } from "../../Config"
-import { ApiUrl } from "../../Config/APIURL"
+import axios from "axios";
+import { BaseUrl2, BaseUrl5 } from "../../Config";
+import { ApiUrl } from "../../Config/APIURL";
 
+export const AddData = async (req) => {
+  console.log("this is service data", req);
+  try {
+    const response = await axios.post(BaseUrl5 + ApiUrl.addTask, req, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-export const AddData= async()=>{
-    try{
-
-         const response = await axios.get(BaseUrl+ApiUrl.product)
-
-         return response || []
-
-    }
-    catch(e){
-        console.log(e)
-
-    }
-}
+    return response || [];
+  } catch (e) {
+    console.log(e);
+  }
+};

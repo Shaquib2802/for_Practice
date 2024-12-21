@@ -5,25 +5,46 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ModeIcon from "@mui/icons-material/Mode";
 import { useFormik } from "formik";
 import { Registration } from "../../Services/Register";
+import { NewLogin } from "../../Services/NewLogin";
+import Add_Task from "../Add_Task/Add_Task";
 
 const Interface = () => {
+  const [data1, setData] = useState({
+    mail: "",
+    password1: "",
+  });
+  const handleChange = (e) => {
+    const { name, values } = e.target;
+
+    console.log(e.target.value);
+
+    setData(() => ({
+      ...data1,
+      [name]: values,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    NewLogin(data1);
+
+    console.log("data", data1);
+  };
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      age: "",
 
       /*  date: moment("12-11-2024").format("YYYY-MM-DD"), */
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      Registration(values)
+      Registration(values);
       console.log("first", values);
     },
   });
-  const [open1, setOpen1] = useState(0);
 
+  const [open1, setOpen1] = useState(0);
   const handleOpen = () => {
     setOpen1(1);
   };
@@ -66,20 +87,32 @@ const Interface = () => {
                   </div>
                 </div>
                 <div className="w-[60%] border-3">
-                  <form className="grid grid-cols-1 mt-28 w-[50%] mx-auto">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="grid grid-cols-1 mt-28 w-[50%] mx-auto"
+                  >
                     <input
                       type="text"
+                      name="mail"
+                      onChange={handleChange}
+                      value={data1.mail}
                       placeholder="Enter Your Email"
                       className="border-b-3 h-10 placeholder:pl-3 border-b-2"
                     />
                     <input
                       type="password"
+                      name="password1"
+                      onChange={handleChange}
+                      value={data1.password1}
                       placeholder="Enter Your Password"
                       className="mt-5 h-10 placeholder:pl-3 border-b-2"
                     />
-                    <div className="bg-green-800 text-white mx-auto text-center text-xl font-semibold p-3 rounded-md mt-5 w-[100%]">
+                    <button
+                      type="submit"
+                      className="bg-green-800 cursor-pointer text-white mx-auto text-center text-xl font-semibold p-3 rounded-md mt-5 w-[100%]"
+                    >
                       Login
-                    </div>
+                    </button>
                     <div
                       onClick={() => {
                         setOpen1(2);
@@ -119,7 +152,10 @@ const Interface = () => {
                   </div>
                 </div>
                 <div className="w-[60%]  border-3 ">
-                  <form onSubmit={formik.handleSubmit} className="w-[90%] mx-auto bg-white  h-[90%]">
+                  <form
+                    onSubmit={formik.handleSubmit}
+                    className="w-[90%] mx-auto bg-white  h-[90%]"
+                  >
                     <div className="grid grid-cols-2 mt-16 gap-8">
                       <input
                         type="text"
@@ -155,7 +191,10 @@ const Interface = () => {
                         className="h-10 placeholder:pl-3 border-b-2"
                       />
                     </div>
-                    <button type="submit" className="bg-green-800 text-white mx-auto text-center text-xl font-semibold p-3 rounded-md mt-8 w-[80%]">
+                    <button
+                      type="submit"
+                      className="bg-green-800 text-white mx-auto text-center text-xl font-semibold p-3 rounded-md mt-8 w-[80%]"
+                    >
                       Signup
                     </button>
                   </form>
@@ -175,9 +214,7 @@ const Interface = () => {
       </div>
       <div className="flex justify-around mt-8">
         <div className="text-4xl font-bold">Tasks</div>
-        <div className="text-xl font-semibold text-white w-[9%] p-1 rounded-md bg-green-800">
-          + Add Task
-        </div>
+        <div><Add_Task/></div>
       </div>
       <div className="border mt-5 w-[80%] mx-auto">
         <div className="border-4 p-5 rounded-md flex m-5 justify-around">

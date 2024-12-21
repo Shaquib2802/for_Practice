@@ -3,4 +3,5 @@ export const ApiUrl = {
   Login: "/auth/login",
   Register: "/user/register",
   newLogin: "/user/login",
+  addTask: "/v1/todos",
 };
