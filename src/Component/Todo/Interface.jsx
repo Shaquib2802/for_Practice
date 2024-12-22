@@ -214,57 +214,11 @@ const Interface = () => {
       </div>
       <div className="flex justify-around mt-8">
         <div className="text-4xl font-bold">Tasks</div>
-        <div><Add_Task/></div>
-      </div>
-      <div className="border mt-5 w-[80%] mx-auto">
-        <div className="border-4 p-5 rounded-md flex m-5 justify-around">
-          <div className="text-gray-300">
-            <CheckBoxOutlineBlankIcon />
-          </div>
-          <div className="font-semibold w-[28%]">
-            Prepare agenda for board meeting
-          </div>
-          <div className="flex gap-x-2">
-            <div className="text-gray-300">
-              <AccessTimeIcon />
-            </div>
-            <div className="text-gray-500">Thu Jun 13 2024</div>
-          </div>
-          <div className="text-gray-500">
-            <ModeIcon />
-          </div>
-        </div>
-        <div className="border-4 p-5 rounded-md flex m-5 justify-around">
-          <div className="text-gray-300">
-            <CheckBoxOutlineBlankIcon />
-          </div>
-          <div className="font-semibold w-[28%]">Test Task</div>
-          <div className="flex gap-x-2">
-            <div className="text-gray-300">
-              <AccessTimeIcon />
-            </div>
-            <div className="text-gray-500">Wed Nov 13 2024</div>
-          </div>
-          <div className="text-gray-500">
-            <ModeIcon />
-          </div>
-        </div>
-        <div className="border-4 p-5 rounded-md flex m-5 justify-around">
-          <div className="text-gray-300">
-            <CheckBoxOutlineBlankIcon />
-          </div>
-          <div className="font-semibold w-[28%]">Check Datasource</div>
-          <div className="flex gap-x-2">
-            <div className="text-gray-300">
-              <AccessTimeIcon />
-            </div>
-            <div className="text-gray-500">Wed Oct 16 2024</div>
-          </div>
-          <div className="text-gray-500">
-            <ModeIcon />
-          </div>
+        <div>
+          <Add_Task />
         </div>
       </div>
+      
     </div>
   );
 };
