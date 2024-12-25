@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import Database from "./Component/Database";
 import Check from "./Check";
-import Interface from "./Component/Todo/Interface";
+
 import Form1 from "./Component/Todo/Form1";
 import Form2 from "./Component/Todo/Form2";
 import Add_Task from "./Component/Add_Task/Add_Task";
 import TaskFolder from "./Component/Todo/TaskFolder";
+import Interface from "./Component/Todo/Interface";
 
 function App() {
   /*  const [data, setData] = useState([]);
@@ -26,6 +27,7 @@ function App() {
       {/* <Check/> */}
       <Interface/>  
       {/* <TaskFolder/> */}
+      
       {/* <Add_Task/> */}
       {/* <Form1 /> */}
       {/* <Form2/> */}

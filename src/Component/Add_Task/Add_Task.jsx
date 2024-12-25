@@ -1,17 +1,26 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { AddData } from "../../Services/Add Data";
-const Add_Task = () => {
-  const [data1, setData] = useState({
+import { SettingsSystemDaydreamTwoTone } from "@mui/icons-material";
+const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) => {
+    const [data1, setData] = useState({
     description: "",
     title: "",
     is_completed: false,
   });
+  useEffect(() => {
+    setData({
+        title:items?.title ,
+        description:items?.description || "",
+        is_completed:items?.is_completed || ""
+    })
+  },[items])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -26,6 +35,12 @@ const Add_Task = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     AddData(data1);
+    if(items){
+      TodoUpdate(data1)
+  }else{TodoAdd(data1)
+  }
+  handleClose2()
+  setFetcher(!fetcher)
     console.log("data", data1);
   };
   /*  const formik = useFormik({
@@ -44,19 +59,15 @@ const Add_Task = () => {
       console.log("first", values);
     },
   }); */
-  const [open2, setOpen2] = useState();
-  const handleOpen2 = () => {
-    setOpen2(!open2);
-  };
 
   const handleClose2 = () => {
-    setOpen2(false);
+    setOpen(false);
   };
 
   return (
     <>
       <div
-        onClick={handleOpen2}
+        onClick={handleOpen}
         className="text-xl font-semibold text-white p-1 rounded-md bg-green-800"
       >
         + Add Task
@@ -64,7 +75,7 @@ const Add_Task = () => {
       {open2 && (
         <div
           onClick={handleClose2}
-          className=" w-[100%] pt-48 absolute inset-0 items-center    bg-black bg-opacity-40   "
+          className=" w-[100%] h-screen pt-48 absolute inset-0 items-center    bg-black bg-opacity-40   "
         >
           <form
             onSubmit={handleSubmit}

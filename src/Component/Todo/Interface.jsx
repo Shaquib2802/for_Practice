@@ -7,12 +7,14 @@ import { useFormik } from "formik";
 import { Registration } from "../../Services/Register";
 import { NewLogin } from "../../Services/NewLogin";
 import Add_Task from "../Add_Task/Add_Task";
+import TaskFolder from "./TaskFolder";
 
 const Interface = () => {
   const [data1, setData] = useState({
     mail: "",
     password1: "",
   });
+  
   const handleChange = (e) => {
     const { name, values } = e.target;
 
@@ -212,13 +214,8 @@ const Interface = () => {
           Completed
         </div>
       </div>
-      <div className="flex justify-around mt-8">
-        <div className="text-4xl font-bold">Tasks</div>
-        <div>
-          <Add_Task />
-        </div>
-      </div>
       
+      <TaskFolder />
     </div>
   );
 };

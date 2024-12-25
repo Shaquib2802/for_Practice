@@ -1,91 +1,62 @@
-import React, { useState } from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ModeIcon from "@mui/icons-material/Mode";
+import React, { useEffect, useState } from "react";
+import { GetData } from "../../Services/Get_data";
+import Add_Task from "../Add_Task/Add_Task";
 
 const TaskFolder = () => {
-  const [data1, setData] = useState({
-    _id: "",
-    created_at: "",
-    title: "",
-    description: ""
-    
-  });
-  const handleChange = (e) => {
-    const { name, values } = e.target;
-
-    console.log(e.target.value);
-
-    setData(() => ({
-      ...data1,
-      [name]: values,
-    }));
+  const [fetcher,setFetcher]=useState(false)
+  const [items,setItems] =useState()
+  const [data, setData] = useState();
+  const [open2, setOpen2] = useState();
+  const handleOpen2 = () => {
+    setOpen2(!open2);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    NewLogin(data1);
-
-    console.log("data", data1);
+  const DataApi = async () => {
+    const data = await GetData();
+    console.log("aa gaya", data);
+    console.log("data", data?.data?.items);
+    setData(data?.data?.items);
   };
+  useEffect(() => {
+    DataApi();
+  },[fetcher] );
+
   return (
-    <div>
-      <form className="border mt-5 w-[80%] mx-auto">
-        <div className="border-4 p-2 rounded-md flex m-5 justify-around">
-          <input
-            type="text"
-            className="w-[80%] outline-none placeholder:border-3 font-semibold"
-            placeholder=" Enter the id:"
-          />
+    <>
+      <div className="flex justify-around mt-8">
+        <div className="text-4xl font-bold">Tasks</div>
 
-          <div className="text-gray-500  ">
-            <ModeIcon />
-          </div>
-        </div>
-        <div className="border-4 p-2 rounded-md flex m-5 justify-around">
-          <input
-            type="text"
-            className="w-[80%] outline-none placeholder:border-3 font-semibold"
-            placeholder=" Enter the Task:"
-          />
-          <div className="text-gray-500  ">
-            <ModeIcon />
-          </div>
-        </div>
-        <div className="border-4 p-2 rounded-md flex m-5 justify-around">
-          <input
-            type="text"
-            className="w-[80%] outline-none placeholder:border-3 font-semibold"
-            placeholder=" Enter the Task:"
-          />
+        <Add_Task fetcher={fetcher} open2={open2} setOpen={setOpen2} handleOpen={handleOpen2}  items={items} setItems={setItems}/>
+      </div>
+      <div>
+        {data?.map((i, index) => (
+          <div key={index} className="border mt-5 w-[80%] mx-auto">
+            <div className="border-4 p-2 rounded-md flex m-5 justify-around">
+              <div>
+                <CheckBoxOutlineBlankIcon />
+              </div>
+              <div>{i?.description}</div>
+              <div className="flex">
+                <div>
+                  <AccessTimeIcon />
+                </div>
+                <div>{i?.updated_at}</div>
+              </div>
 
-          <div className="text-gray-500  ">
-            <ModeIcon />
+              <div className="text-gray-500  " onClick={handleOpen2} >
+                <ModeIcon  />
+              </div>
+              <div>
+                <DeleteIcon className="text-gray-500" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="border-4 p-2 rounded-md flex m-5 justify-around">
-          <input
-            type="text"
-            className="w-[80%] outline-none placeholder:border-3 font-semibold"
-            placeholder=" Enter the Task:"
-          />
-
-          <div className="text-gray-500  ">
-            <ModeIcon />
-          </div>
-        </div>
-        <div className="border-4 p-2 rounded-md flex m-5 justify-around">
-          <input
-            type="text"
-            className="w-[80%] outline-none placeholder:border-3 font-semibold"
-            placeholder=" Enter the Task:"
-          />
-
-          <div className="text-gray-500  ">
-            <ModeIcon />
-          </div>
-        </div>
-        <button className="flex p-2 m-auto">Submit</button>
-      </form>
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 
