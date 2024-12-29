@@ -3,23 +3,33 @@ import React, { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import { AddData } from "../../Services/Add Data";
 import { SettingsSystemDaydreamTwoTone } from "@mui/icons-material";
-const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) => {
-    const [data1, setData] = useState({
+import { PostData, PutData } from "../../Services/Post Data";
+const Add_Task = ({
+  fetcher,
+  setFetcher,
+  items,
+  open2,
+  setOpen,
+  handleOpen,
+  setItems,
+}) => {
+  const [data1, setData] = useState({
     description: "",
     title: "",
     is_completed: false,
   });
+
   useEffect(() => {
-    setData({
-        title:items?.title ,
-        description:items?.description || "",
-        is_completed:items?.is_completed || ""
-    })
-  },[items])
+ 
+      setData({
+        title: items?.title,
+        description: items?.description || "",
+        is_completed: items?.is_completed || false,
+      });
+    
+  }, [items]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,16 +41,27 @@ const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) 
       [name]: value,
     }));
   };
+  const handleCheckbox = () => {
+   
+    setData({
+      ...data1,
+      is_completed: !data1.is_completed,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (items) {
+      PutData(data1, items?._id);
+    } else {
+      PostData(data1);
+    }
+    handleClose2();
+    setFetcher(!fetcher);
+
     AddData(data1);
-    if(items){
-      TodoUpdate(data1)
-  }else{TodoAdd(data1)
-  }
-  handleClose2()
-  setFetcher(!fetcher)
+    handleClose2();
+    setFetcher(!fetcher);
     console.log("data", data1);
   };
   /*  const formik = useFormik({
@@ -62,6 +83,7 @@ const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) 
 
   const handleClose2 = () => {
     setOpen(false);
+    setItems();
   };
 
   return (
@@ -75,12 +97,12 @@ const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) 
       {open2 && (
         <div
           onClick={handleClose2}
-          className=" w-[100%] h-screen pt-48 absolute inset-0 items-center    bg-black bg-opacity-40   "
+          className="fixed w-[100%] h-[100vh]  inset-0 items-center    bg-black bg-opacity-40   "
         >
           <form
             onSubmit={handleSubmit}
             onClick={(e) => e.stopPropagation()}
-            className="p-5 w-[40%] h-[100%] border-black bg-white  mx-auto border-2 rounded-md"
+            className="p-5 w-[40%] h-[70%] mt-28 border-black bg-white  mx-auto border-2 rounded-md"
           >
             <div className=" text-3xl font-semibold mt-5">Task Details</div>
             <div className="mt-3">
@@ -108,25 +130,12 @@ const Add_Task = ({fetcher,data,setFetcher, items,open2, setOpen, handleOpen }) 
               />
               <label className="text-gray-500  font-semibold ">Status</label>
               <br />
-              <RadioGroup
-                row
-                name="is_completed"
-                onChange={handleChange}
-                aria-labelledby="demo-row-radio-buttons-group-label"
-              >
-                <FormControlLabel
-                  name="completed"
-                  value={data1.not_completed}
-                  control={<Radio />}
-                  label="Completed"
-                />
-                <FormControlLabel
-                  name="not_completed"
-                  control={<Radio />}
-                  value={!data1.not_completed}
-                  label="Not Completed"
-                />
-              </RadioGroup>
+              <input
+                type="checkbox"
+                checked={data1.is_completed}
+                onChange={handleCheckbox} 
+              />
+              <label className="ml-2">{data1.is_completed ? "Completed" : "Not Completed"}</label>
               <br />
               <button
                 type="submit"

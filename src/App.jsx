@@ -25,7 +25,7 @@ function App() {
     <>
       {/* <Database /> */}
       {/* <Check/> */}
-      <Interface/>  
+      {/* <Interface/>   */}
       {/* <TaskFolder/> */}
       
       {/* <Add_Task/> */}
