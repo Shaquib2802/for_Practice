@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BaseUrl2, BaseUrl5 } from "../../Config";
-import { ApiUrl } from "../../Config/APIURL";
+import { ApiUrl } from "../../Config/ApiUrl";
+
 
 export const AddData = async (req) => {
   console.log("this is service Post", req);
@@ -16,3 +17,6 @@ return response || [];
 console.log(e);
 }
 };
+
+
+

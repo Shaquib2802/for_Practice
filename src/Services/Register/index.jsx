@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BaseUrl3 } from "../../Config";
-import { ApiUrl } from "../../Config/APIURL";
+import { ApiUrl } from "../../Config/ApiUrl";
+
 
 export const Registration = async (req) => {
   console.log("this is service data", req);
@@ -14,5 +15,5 @@ export const Registration = async (req) => {
     return response || [];
   } catch (e) {
     console.log(e);
-  }
+  } 
 };
