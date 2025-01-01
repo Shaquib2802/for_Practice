@@ -1,64 +1,79 @@
+import { ErrorMessage, useFormik } from "formik";
 import React, { useState } from "react";
-import "./index.css";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import ModeIcon from "@mui/icons-material/Mode";
-import { useFormik } from "formik";
-import Act_Folder from "./Act_folder";
 import { NewLogin } from "../../Services/NewLogin";
 import { Registration } from "../../Services/Register";
+import Act_Folder from "./Act_folder";
+import "./index.css";
+import * as Yup from "yup";
+
+const errorMessage = (message) => (
+  <p className="validation-error-message">{message}</p>
+);
 
 const Activity = () => {
-     const [data1, setData] = useState({
-        mail: "",
-        password1: "",
-      });
-      
-      const handleChange = (e) => {
-        const { name, values } = e.target;
-    
-        console.log(e.target.value);
-    
-        setData(() => ({
-          ...data1,
-          [name]: values,
-        }));
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        NewLogin(data1);
-    
-        console.log("data", data1);
-      };
-      const formik = useFormik({
-        initialValues: {
-          email: "",
-          password: "",
-    
-          /*  date: moment("12-11-2024").format("YYYY-MM-DD"), */
-        },
-        enableReinitialize: true,
-        onSubmit: (values) => {
-          Registration(values);
-          console.log("first", values);
-        },
-      });
-    
-      const [open1, setOpen1] = useState(0);
-      const handleOpen = () => {
-        setOpen1(1);
-      };
-    
-      const handleClose1 = () => {
-        setOpen1(0);
-      };
-      console.log("first", open1);
+  const [data1, setData] = useState({
+    mail: "",
+    password1: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, values } = e.target;
+
+    console.log(e.target.value);
+
+    setData(() => ({
+      ...data1,
+      [name]: values,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    NewLogin(data1);
+
+    console.log("data", data1);
+  };
+  const schema = Yup.object({
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string()
+      .min(8, "Must be at least 8 characters")
+      .required("Required"),
+    age: Yup.number()
+      .required("Required")
+      .min(1, "Greater than 1")
+      .max(99, "Less than 100")
+      .typeError("Age must be a number"),
+  });
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      age: 0,
+
+      /*  date: moment("12-11-2024").format("YYYY-MM-DD"), */
+    },
+    validationSchema: schema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      Registration(values);
+      console.log("first", values);
+    },
+  });
+
+  const [open1, setOpen1] = useState(0);
+  const handleOpen = () => {
+    setOpen1(1);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(0);
+  };
+  console.log("first", open1);
   return (
     <div className="bg-gray-50 h-screen  m-1">
       <div className="flex h-20 w-[100%]">
         <div className="bg-blue-900 w-[90%] border-r rounded-r-lg text-white font-bold text-6xl p-2">
-          Todo App
+          Activity App
         </div>
         <div className="w-[10%]">
           <button className="!font-semibold" onClick={handleOpen}>
@@ -166,31 +181,52 @@ const Activity = () => {
                         placeholder="Enter your First Name"
                         className="border-b-3 h-10 placeholder:pl-3 border-b-2"
                       />
-
-                      <input
-                        type="email"
-                        name="email"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                        placeholder="Enter your Email"
-                        className="h-10 placeholder:pl-3 border-b-2"
-                      />
-                      <input
-                        type="password"
-                        name="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        placeholder="Enter Password"
-                        className="h-10 placeholder:pl-3 border-b-2"
-                      />
-                      <input
-                        type="number"
-                        name="age"
-                        value={formik.values.age}
-                        onChange={formik.handleChange}
-                        placeholder="Enter your age"
-                        className="h-10 placeholder:pl-3 border-b-2"
-                      />
+                      <div>
+                        <input
+                          type="email"
+                          name="email"
+                          onChange={formik.handleChange}
+                          value={formik.values?.email}
+                          placeholder="Enter your Email"
+                          className="h-10 placeholder:pl-3 border-b-2"
+                        />
+                        {formik.touched.email && formik.errors.email && (
+                          <p className="validation-error-message !text-red-500 !text-xs">
+                            {formik.errors.email}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <input
+                          type="password"
+                          name="password"
+                          value={formik.values?.password}
+                          onChange={formik.handleChange}
+                          placeholder="Enter Password"
+                          className="h-10 placeholder:pl-3 border-b-2"
+                        />
+                        {formik.touched.password && formik.errors.password && (
+                          <p className="validation-error-message !text-red-500 !text-xs">
+                            {formik.errors.password}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        {" "}
+                        <input
+                          name="age"
+                          /* type="number" */
+                          value={formik.values.age}
+                          onChange={formik.handleChange}
+                          placeholder="Enter your age"
+                          className="h-10 placeholder:pl-3 border-b-2"
+                        />
+                        {formik.touched.age && formik.errors.age && (
+                          <p className="validation-error-message !text-red-500 !text-xs">
+                            {formik.errors.age}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <button
                       type="submit"
@@ -213,10 +249,10 @@ const Activity = () => {
           Completed
         </div>
       </div>
-      
-      <Act_Folder/>
-    </div>
-  )
-}
 
-export default Activity
+      <Act_Folder />
+    </div>
+  );
+};
+
+export default Activity;

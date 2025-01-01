@@ -9,6 +9,10 @@ import Add_Task from "./Component/Add_Task/Add_Task";
 import TaskFolder from "./Component/Todo/TaskFolder";
 import Interface from "./Component/Todo/Interface";
 import Activity from "./Component/Activity/Activity";
+import Task from "./Component/New_Task/Task";
+import Template from "./Component/New_Task/Template";
+import NewYear from "./Component/New_Task/NewYear";
+import New_Form from "./Component/New_Form";
 
 function App() {
   /*  const [data, setData] = useState([]);
@@ -28,9 +32,14 @@ function App() {
       {/* <Check/> */}
       {/* <Interface/>   */}
       {/* <TaskFolder/> */}
-      <Activity/>
+      {/* <Activity/> */}
+      
+      {/* <Task/> */}
       {/* <Add_Task/> */}
+      {/* <Template/> */}
+      {/* <NewYear/> */}
       {/* <Form1 /> */}
+      <New_Form/>
       {/* <Form2/> */}
       {/*    {data.map((item, index) => (
         <>

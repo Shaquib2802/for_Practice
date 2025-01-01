@@ -1,6 +1,7 @@
 import axios from "axios";
 import {  BaseUrl6 } from "../../Config";
-import { ApiUrl } from "../../Config/ApiUrl";
+import { ApiUrl } from "../../Config/APIURL";
+
 
 
 export const Act_get = async () => {
